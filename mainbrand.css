@@ -1,10 +1,6 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
+/* -----------------------------------------------------
+   FONT-FACE IMPORTS (unchanged from your code)
+----------------------------------------------------- */
 @font-face {
     font-family: myFont;
     src: url(super_brigade/superbrigadechrome.ttf);
@@ -41,133 +37,62 @@
     font-family: myFont9;
     src: url(creato_display/CreatoDisplay-Light.otf );
 }
-body {
-    font-family: 'Arial', sans-serif;
-    color: #000;
-    background: linear-gradient(to bottom, black, white);
-    min-height: 100vh; /* Allows full scrolling */
+
+/* Global Reset */
+* {
     margin: 0;
-    overflow-x: hidden;
     padding: 0;
-    width: 100vw;  
-    background-attachment: fixed; /* Ensures the gradient stays */    
 }
 
-
-.featured-items {
-    padding: 40px 20px;
-    position: fixed;
-    top: 150px;
-    left: 200px;
+/* Body Background */
+body {
+    min-height: 100vh;
+    background: url('sample-picture2.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-
-h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    position: relative;
-    top: -20px;
-    color: white;
-    font-family: myFont7;
-}
-
-
-/* Product Grid */
-.products {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-
-/* Product Card */
-.product {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    width: 250px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-.product img {
-    width: 100%;
-    border-radius: 5px;
-}
-
-
-.product h3 {
-    font-size: 1rem;
-    margin: 10px 0;
-}
-
-
-.product p {
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-
+/* -----------------------------------------------------
+   (1) TEXT CONTAINERS (HunnidKidd, etc.)
+   - Centered
+   - Scale with screen size via VW (so they don't look too big or small).
+   - Remain centered on all screen sizes.
+----------------------------------------------------- */
 .text-container {
-    margin-left: 10px;
-    font-size: 50px;
+    font-size: 3vw;  /* scales with viewport width */
     font-family: myFont;
     color: white;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
     position: absolute;
-    top: 0px;
-    text-decoration: none;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     cursor: pointer;
-    z-index: 1001;  /* Added to ensure it’s on top */
+    z-index: 1001;
+    white-space: nowrap;
+    text-decoration: none;
 }
+
 .text-container1 {
-    margin-left: 150px;
-    font-size: 10px;
+    font-size: 0.7vw; /* also scales with viewport width */
     font-family: myFont1;
     color: white;
     text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
     position: absolute;
-    top: 47px;
+    top: 3vw;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
 }
-.resizable-image {
-    width: 40px;
-    height: auto;
-    max-width: 100%;
-    display: block;
-    margin-top: 10px;
-    margin-left: 1470px; /* Moves image to the left */
-    border-radius: 10px;
-}
-
-
-
-
-/*.text-container2 {
-    margin-left: 75px;
-    font-family: myFont2;
-    color: #000000;
-    font-size: 15px;
-    top: 15px;
-    position: absolute;
-}
-
-
-.text-container3 {
-    margin-left: 40px;
-    font-size: 50px;
-    font-family: myFont3;
-    color: #000000;
-    top: 0px;
-    position: absolute;
-} */
-
-
-
-
+/* -----------------------------------------------------
+   (2) NAVBAR
+   - Fixed top
+   - Background is NOT clickable (pointer-events: none)
+   - Only links and menu toggle are clickable
+----------------------------------------------------- */
 .navbar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -176,16 +101,26 @@ h2 {
     padding: 1.5em 0;
     z-index: 1000;
     text-align: center;
+
+    /* Make the background itself not clickable */
+    pointer-events: none;
 }
 
+/* Re-enable pointer events for actual interactive elements */
+.navbar-links,
+.navbar-links *,
+.menu-toggle {
+    pointer-events: auto;
+}
 
+/* Desktop menu layout */
 .navbar-links {
     list-style: none;
     display: flex;
-    justify-content: center;
-    gap: 5em;
+    gap: 1.5em;
+    justify-content: flex-start;
+    padding-left: 2em;
 }
-
 
 .navbar-links a {
     text-decoration: none;
@@ -196,12 +131,11 @@ h2 {
     transition: color 0.3s;
 }
 
-
 .navbar-links a:hover {
     color: #888;
 }
 
-
+/* Hover underline effect */
 .navbar-links a::after {
     content: "";
     display: block;
@@ -211,454 +145,170 @@ h2 {
     transition: width 0.3s;
 }
 
-
 .navbar-links a:hover::after {
     width: 100%;
     transition: width 0.3s;
 }
 
-
-/* Style for the sub-bar */
+/* -----------------------------------------------------
+   (3), (4), (5) SUBMENU (DESKTOP + MOBILE)
+   - (3) In mobile, text = white, no white dividing line
+   - (4) Hover underline color = white in mobile, matches text length
+   - (5) Restore old bigger sub-bar style in desktop
+----------------------------------------------------- */
 .sub-bar {
     position: absolute;
-    top: 100%; /* Place it below the main menu */
-    left: 50%; /* Move it to the center */
+    top: 100%;
+    left: 50%;
     transform: translateX(-50%);
     background: white;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     list-style: none;
     padding: 0;
-    display: none; /* Initially hidden */
-    min-width: 150px;
+    display: none;     /* hidden by default */
+    min-width: 150px;  /* adjust to restore your old sub-bar width */
     text-align: center;
-    opacity: 0; /* Start as invisible */
-    visibility: hidden; /* Prevent unintended flickering */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Smooth fade */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-
-.sub-bar li {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+.has-submenu {
+    position: relative;
 }
 
-
-.sub-bar li a {
-    text-decoration: none;
-    color: black;
-    font-size: 0.9rem;
-    display: block;
-}
-
-
-/* Show the sub-bar when hovering over the parent */
+/* Show the submenu on hover (desktop) */
 .has-submenu:hover .sub-bar {
     display: block;
-    opacity: 1; /* Fade in */
+    opacity: 1;
     visibility: visible;
 }
-.has-submenu {
-    position: relative; /* Ensures sub-bar is positioned relative to this */
+
+/* Each item: block-level with padding => "old" bigger sub-bar style */
+.sub-bar li {
+    border-bottom: none; /* remove dividing line */
 }
 
-
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    gap: 10px;
+.sub-bar li a {
+    display: block;       /* full width clickable area */
+    padding: 10px;        /* bigger area => bigger sub-bar height */
+    text-decoration: none;
+    color: black;         /* desktop: black text on white background */
+    font-size: 0.9rem;
+    transition: color 0.3s ease-in-out;
+    text-align: center;
 }
 
-
-#search-bar {
-    padding: 8px;
-    width: 250px; /* Adjust width as needed */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
+.sub-bar li a:hover {
+    color: #888;
+    opacity: 1;
+    visibility: visible;
 }
 
-
-.search-btn {
-    padding: 8px 12px;
-    border: none;
-    color: black;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    font-family: myFont3;
-    font-size: 50px;
-    background: none;
-
-
+/* Hover underline effect for desktop */
+.sub-bar li a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    background: black; /* desktop color for underline */
+    transition: width 0.3s;
 }
 
-
-.search-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 4.5%;
-    left: 75%;
-    transform: translate(-50%, -50%);
-    gap: 10px;
-    z-index: 1000;
+.sub-bar li a:hover::after {
+    width: 100%;
 }
 
-
-#search-bar {
-    padding: 4px 8px;  /* Smaller padding */
-    width: 124px;  /* Adjust width to make it smaller */
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 12px;  /* Reduce text size */
-}
-
-
-.search-btn {
-    padding: 8px 12px;
-    border: none;
+/* -----------------------------------------------------
+   MOBILE MENU TOGGLE
+   - Show hamburger on mobile
+   - Sub-bar text becomes white
+   - Underline is white
+----------------------------------------------------- */
+.menu-toggle {
+    display: none; /* hidden by default on desktop */
+    font-size: 2rem;
     color: white;
     cursor: pointer;
-    transition: background 0.3s ease;
-    font-family: myFont8;
-    font-size: 50px;
-    position: absolute;
-    top: -17px;
-    left: 100%;
-
-
-}
-.cart-btn {
-    position: absolute; /* Allows manual positioning */
-    top: 11px;  /* Move down from the top */
-    left: 1252px; /* Move from the left */
-    padding: 10px 20px;
-    border: none;
-    color:white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s;
-    font-size: 25px; /* Adjusted to be more compact */
-    background: none;
     z-index: 1001;
 }
-.shop-btn {
-    position: absolute; /* Allows manual positioning */
-    top: 15px;  /* Adjust vertical position */
-    left: 1330px; /* Adjust horizontal position */
-    padding: 12px 24px;
-    border: none;
-    background-color: grey;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s ease, transform 0.2s, color 0.3s ease;
-    z-index: 1000;
-}
 
+/* Responsive styles */
+@media (max-width: 768px) {
 
-.shop-btn:hover {
-    background-color: white;
-    color: black; /* Change text to black on hover */
-    transform: scale(1.1);
-}
-.marquee {
-    width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
-    background: #111;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 10px 0;
-    position: relative;
-    top: 20px;
-}
-
-
-.marquee-content {
-    display: flex;
-    width: max-content;
-    animation: marquee 100s linear infinite;
-}
-
-
-@keyframes marquee {
-    from {
-        transform: translateX(0);
+    .navbar {
+        text-align: left;
+        padding: 1em;
     }
-    to {
+
+    .navbar-links {
+        display: none; /* hide links initially */
+        flex-direction: column;
+        gap: 1em;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 1em 0;
+        text-align: center;
+    }
+
+    .menu-toggle {
+        display: block; /* hamburger icon visible on mobile */
+        pointer-events: auto;
+    }
+
+    .navbar-links.active {
+        display: flex;
+    }
+
+    /* Mobile links: white on dark background */
+    .navbar-links a {
+        display: block;
+        padding: 10px;
+        text-align: center;
+        color: white;
+    }
+
+    /* Submenu in mobile */
+    .sub-bar {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        box-shadow: none;
+        background: none; /* or use rgba(0, 0, 0, 0.8) if you want a background */
+        min-width: auto;
+    }
+
+    /* (3) White text in mobile sub-menu */
+    .sub-bar li a {
+        color: white;     /* override desktop black */
+        display: inline-block; 
+        padding: 10px;    /* keep some padding for a decent clickable area */
+    }
+
+    /* (4) White underline in mobile, matching text length */
+    .sub-bar li a::after {
+        background: white;
+    }
+
+    /* Show submenu on hover (mobile).
+       If you want click-to-open instead, you'd handle that in JS. */
+    .has-submenu:hover .sub-bar {
+        display: block;
+    }
+    .text-container {
+        font-size: 1.5rem;   /* same as .menu-toggle size */
+        top: 1rem;         /* push down slightly if needed */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .text-container1 {
+        font-size: 0.3rem;   /* smaller subtext */
+        top: 2.5rem;         /* position below main text */
+        left: 50%;
         transform: translateX(-50%);
     }
 }
-
-
-.image-container {
-    width: 760px;  /* Adjust size */
-    height: 750px; /* Maintain 1:1 aspect ratio */
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 20px;    
-}
-
-
-/* Image Styles */
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Keeps 1:1 ratio without stretching */
-    transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-
-/* Hover Effect */
-.image-container:hover img {
-    transform: scale(1.2); /* Image enlarges on hover */
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
-}
-
-
-/* Animation: Image Moving Slightly */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px); /* Moves up slightly */
-    }
-}
-.image-container2 {
-    width: 760px;  /* Adjust size */
-    height: 750px; /* Maintain 1:1 aspect ratio */
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 20px;  
-    left: 760px;
-}
-
-
-/* Image Styles */
-.image-container2 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Keeps 1:1 ratio without stretching */
-    transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-
-/* Hover Effect */
-.image-container2:hover img {
-    transform: scale(1.2); /* Image enlarges on hover */
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
-}
-
-
-/* Animation: Image Moving Slightly */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px); /* Moves up slightly */
-    }
-}
-.image-container4 {
-    width: 760px;  /* Adjust size */
-    height: 750px; /* Maintain 1:1 aspect ratio */
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    top: 20px;  
-   
-}
-
-
-/* Image Styles */
-.image-container4 img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Keeps 1:1 ratio without stretching */
-    transition: transform 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-
-/* Hover Effect */
-.image-container4:hover img {
-    transform: scale(1.2); /* Image enlarges on hover */
-    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.7);
-}
-
-
-/* Animation: Image Moving Slightly */
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-10px); /* Moves up slightly */
-    }
-}
-.about-section {
-    max-width: 600px;
-    text-align: left;
-    position: absolute;
-    top: 330px; /* Adjust upward/downward */
-    left: 55%; /* Adjust leftward/rightward */
-    padding: 20px;
-    background: transparent; /* Ensure no background */
-    font-family: myFont9;
-    font-size: 50px;
-}
-
-
-.about-section h1 {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-
-.about-section p {
-    font-size: 18px;
-    line-height: 1.5;
-}
-.about-section.scrolled {
-    color: white; /* Change text color when scrolled */
-}
-
-
-.about-section2 {
-    max-width: 600px;
-    text-align: left;
-    position: absolute;
-    top: 1160px; /* Adjust upward/downward */
-    left: 5%; /* Adjust leftward/rightward */
-    padding: 20px;
-    background: transparent; /* Ensure no background */
-    font-family: myFont9;
-    font-size: 10px;
-    transition: color 0.8s ease-in-out; /* Smooth transition */
-}
-
-
-.about-section2 h1 {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-
-.about-section2 p {
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-
-.about-section2.scrolled {
-    color: white; /* Change text color when scrolled */
-}
-
-
-.about-section3 {
-    max-width: 600px;
-    text-align: left;
-    position: absolute;
-    top: 1850px; /* Adjust upward/downward */
-    left: 55%; /* Adjust leftward/rightward */
-    padding: 20px;
-    background: transparent; /* Ensure no background */
-    font-family: myFont9;
-    font-size: 50px;
-    color: black; /* Default color */
-    transition: color 0.8s ease-in-out; /* Smooth transition */
-}
-
-
-.about-section3 h1 {
-    font-size: 40px;
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-
-.about-section3 p {
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-
-.about-section3.scrolled {
-    color: white; /* Change to white when scrolling down */
-}
-
-
-.footer {
-    position: relative;
-    width: 100%;
-    background-color: #111;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    margin-top: auto; /* Pushes the footer to the bottom */
-    clear: both;
-    z-index: 10;
-}
-
-
-.footer-content h2 {
-    color: white; /* White text */
-    display: inline-block; /* Makes background wrap around text */
-    padding: 5px 10px; /* Adds spacing */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    position: relative;
-    top: 20%;
-    font-family: myFont1;
-}
-
-
-.footer-content p {
-    font-size: 16px;
-    color: #ddd; /* Light gray text for readability */
-}
-
-
-.social-icons {
-    margin-top: 10px;
-}
-
-
-.social-icons a {
-    margin: 0 10px;
-    color: white; /* White social media icons */
-    font-size: 20px;
-    text-decoration: none;
-    transition: color 0.3s ease-in-out;
-}
-
-
-.social-icons a:hover {
-    color: gray;
-}
-
-
-
-
-
